@@ -9,21 +9,44 @@
 
 # Objetivo
 
-Cada grupo debe montar un **pipeline DevOps completo** para una aplicación web sencilla, desde el código hasta el despliegue en **AWS** usando **GitHub Actions**.
+Cada grupo debe construir un **pipeline DevOps completo** desde cero: crear el Dockerfile, configurar GitHub Actions, generar artefactos, publicar releases y desplegar en **AWS EC2**.
 
-> **La app es simple a propósito.** Lo que evaluamos es el pipeline, los contenedores, los tests, la observabilidad y el despliegue — no la complejidad del código.
+> **Esto no es un ejercicio de programación.** Es un ejercicio de **flujo DevOps**: entender cómo se conectan cada pieza del ciclo de vida del software — desde el código hasta producción.
+
+---
+
+# Lo que van a construir
+
+```
+Desarrollador hace un cambio
+        │
+        ▼
+  Push a GitHub
+        │
+        ▼
+GitHub Actions se ejecuta automáticamente:
+  ┌─────────────────────────────────────┐
+  │  1. Build     → Instalar dependencias │
+  │  2. Test      → Correr pruebas         │
+  │  3. Lint      → Análisis estático      │
+  │  4. Artifact  → Construir imagen Docker│
+  │  5. Release   → Publicar en Docker Hub │
+  │  6. Deploy    → Desplegar en AWS EC2   │
+  └─────────────────────────────────────┘
+        │
+        ▼
+  App corriendo en AWS, accesible desde internet
+```
 
 ---
 
 # Retos Disponibles
 
-Cada grupo elige **UN reto**. Todos incluyen código base para que se enfoquen en el ecosistema DevOps.
+Cada grupo elige **UN reto**. Se les entrega código fuente funcional — lo que NO se les entrega es el Dockerfile, el pipeline ni la configuración de despliegue.
 
 ---
 
 ## Reto 1: API de Tareas (To-Do)
-
-**App:** API REST con 4 endpoints para gestionar tareas.
 
 ```
 GET    /tasks      → Listar tareas
@@ -33,179 +56,240 @@ DELETE /tasks/:id  → Eliminar tarea
 GET    /health     → Estado del servicio
 ```
 
-**Stack sugerido:** Python + FastAPI + SQLite
-**Deploy:** EC2 con Docker o AWS App Runner
+**Stack:** Python + FastAPI + SQLite
+**Código base:** Se proporciona con endpoints funcionales y tests de ejemplo
 
 ---
 
 ## Reto 2: API de Clima
 
-**App:** API que consulta el clima de una ciudad usando Open-Meteo (gratuita, sin API key).
-
 ```
-GET    /weather/:city     → Clima actual (temp, humedad, viento)
+GET    /weather/:city       → Clima actual (temperatura, humedad, viento)
 GET    /weather/:city/forecast → Pronóstico 5 días
-GET    /history            → Últimas 10 consultas
-GET    /health             → Estado del servicio
+GET    /history             → Últimas 10 consultas
+GET    /health              → Estado del servicio
 ```
 
-**API externa:** https://open-meteo.com (gratuita)
-**Stack sugerido:** Python + Flask + SQLite
-**Deploy:** EC2 con Docker
+**API externa:** Open-Meteo (gratuita, sin API key) — https://open-meteo.com
+**Stack:** Python + Flask + SQLite
+**Código base:** Se proporciona con endpoints funcionales
 
 ---
 
 ## Reto 3: Generador de Contraseñas
 
-**App:** API que genera contraseñas seguras con diferentes opciones.
-
 ```
-GET    /generate?length=16&numbers=true&symbols=true  → Generar contraseña
-POST   /batch  → Generar múltiples contraseñas {cantidad, longitud}
-GET    /stats   → Estadísticas de uso (total generadas, longitud promedio)
-GET    /health  → Estado del servicio
+GET    /generate?length=16&numbers=true&symbols=true → Generar contraseña
+POST   /batch    → Generar múltiples {cantidad, longitud}
+GET    /stats    → Estadísticas de uso
+GET    /health   → Estado del servicio
 ```
 
-**Stack sugerido:** Node.js + Express
-**Deploy:** EC2 con Docker
+**Stack:** Node.js + Express
+**Código base:** Se proporciona con lógica funcional
 
 ---
 
 ## Reto 4: API de Libros
 
-**App:** API REST para un catálogo de libros con búsqueda.
-
 ```
-GET    /books           → Listar libros (con paginación)
+GET    /books           → Listar libros (paginado)
 GET    /books/:id       → Detalle de un libro
 GET    /books/search?q= → Buscar por título o autor
-POST   /books           → Agregar libro {titulo, autor, año, genero}
+POST   /books           → Agregar libro {titulo, autor, año}
 DELETE /books/:id       → Eliminar libro
 GET    /health          → Estado del servicio
 ```
 
-**Stack sugerido:** Python + FastAPI + SQLite
-**Deploy:** EC2 con Docker o AWS App Runner
+**Stack:** Python + FastAPI + SQLite
+**Código base:** Se proporciona con CRUD funcional
 
 ---
 
 ## Reto 5: API de Cotización de Monedas
 
-**App:** API que consulta tasas de cambio usando una API gratuita.
-
 ```
-GET    /rate/:from/:to  → Cotización actual (ej: /rate/USD/COP)
-GET    /rates/:base     → Todas las tasas para una moneda base
-GET    /history         → Últimas 20 consultas con timestamp
+GET    /rate/:from/:to  → Cotización (ej: /rate/USD/COP)
+GET    /rates/:base     → Todas las tasas para una moneda
+GET    /history         → Últimas 20 consultas
 GET    /health          → Estado del servicio
 ```
 
-**API externa:** https://open.er-api.com (gratuita, sin API key)
-**Stack sugerido:** Node.js + Express + SQLite
-**Deploy:** EC2 con Docker
+**API externa:** https://open.er-api.com (gratuita)
+**Stack:** Node.js + Express + SQLite
+**Código base:** Se proporciona con consulta a API funcional
 
 ---
 
 ## Reto 6: Mini Blog
 
-**App:** API REST para publicar y consultar posts de un blog.
-
 ```
-GET    /posts           → Listar posts (paginado)
-GET    /posts/:id       → Ver un post
-POST   /posts           → Crear post {titulo, contenido, autor}
-PUT    /posts/:id       → Editar post
-DELETE /posts/:id       → Eliminar post
-GET    /health          → Estado del servicio
+GET    /posts      → Listar posts
+GET    /posts/:id  → Ver un post
+POST   /posts      → Crear post {titulo, contenido, autor}
+PUT    /posts/:id  → Editar post
+DELETE /posts/:id  → Eliminar post
+GET    /health     → Estado del servicio
 ```
 
-**Stack sugerido:** Python + Flask + SQLite
-**Deploy:** EC2 con Docker
+**Stack:** Python + Flask + SQLite
+**Código base:** Se proporciona con CRUD completo
 
 ---
 
 ## Reto 7: Reto Libre
 
-**App:** Propongan su propia idea. Debe tener mínimo 3 endpoints + `/health`.
-
-**Requisitos:** Aprobación del docente antes de empezar.
+Propongan su propia idea. Mínimo 3 endpoints + `/health`.
+**Requiere aprobación del docente.**
 
 ---
 
-# Requisitos del Pipeline
+# Lo que DEBEN construir (sin código base)
 
-## 1. Repositorio (Git/GitHub)
+Todo esto lo hacen los estudiantes desde cero:
 
-| Requisito | Detalle |
-|-----------|---------|
-| Repo privado en GitHub | Agregar al docente (`cesarpalacios`) como collaborator |
-| Estrategia de branching | Elegir y documentar (GitHub Flow recomendado para simplicidad) |
-| Protección de main | Solo merge vía Pull Request |
-| Commits semánticos | `feat:`, `fix:`, `docs:`, `ci:`, `test:` |
-| `.gitignore` | `node_modules/`, `__pycache__/`, `.env`, `*.log`, `.venv/` |
-| Mínimo 5 Pull Requests | Con review entre integrantes |
+## 1. Dockerfile
 
-## 2. Contenerización (Docker)
+**NO se les proporciona.** Deben crearlo desde cero.
 
-| Requisito | Detalle |
-|-----------|---------|
-| `Dockerfile` | Imagen liviana. Los estudiantes pueden copiar uno base y adaptarlo |
-| `docker-compose.yml` | `docker compose up` levanta todo |
-| `.env.example` | Variables de entorno sin valores reales |
-| Imagen publicada | Push a Docker Hub desde el pipeline |
+**Lo que deben resolver:**
+- ¿Qué imagen base usar? (`python:3.12-slim`, `node:20-alpine`)
+- ¿Cómo copiar el código e instalar dependencias?
+- ¿Cómo exponer el puerto correcto?
+- ¿Cómo definir el comando de inicio?
 
-## 3. Integración Continua (CI) — GitHub Actions
+**Posibles errores que encontrarán:**
+- La app usa SQLite pero el directorio no tiene permisos de escritura en el contenedor
+- Las dependencias no se instalan correctamente
+- El puerto no coincide entre Dockerfile y docker-compose
+- Variables de entorno no definidas en el contenedor
 
-| Requisito | Detalle |
-|-----------|---------|
-| `.github/workflows/ci-cd.yml` | Pipeline automatizado |
-| Trigger | Push y Pull Request a `main` |
-| Build | Instalar dependencias automáticamente |
-| Tests | **Mínimo 5 pruebas unitarias** |
-| Linting | `flake8`/`ruff` (Python) o `eslint` (Node.js) |
+> **Aprendizaje:** Entender cómo funciona la contenerización, qué necesita una app para correr en un contenedor, y cómo resolver errores de entorno.
 
-## 4. Entrega Continua (CD) — Despliegue en AWS
+## 2. docker-compose.yml
 
-| Requisito | Detalle |
-|-----------|---------|
-| Despliegue automático | Tras merge a `main`, desplegar en AWS sin intervención manual |
-| AWS Academy | Usar el laboratorio de AWS Academy (cuenta gratuita del curso) |
-| Opciones de despliegue | EC2 con Docker, AWS App Runner, o Elastic Beanstalk |
-| Health check | Verificar que la app respondió después del despliegue |
+Deben crear un compose que levante la app con un solo comando.
 
-**Flujo esperado:**
-```
-Push a main → GitHub Actions:
-  1. Build (instalar deps)
-  2. Test (5 tests mínimo)
-  3. Lint (análisis estático)
-  4. Docker build + push a Docker Hub
-  5. Deploy a AWS (SSH a EC2 + docker pull + docker run)
+```yaml
+# Ejemplo de lo que deben construir (NO copiar esto tal cual):
+services:
+  app:
+    build: .
+    ports:
+      - "?????:?????"  # Deben definir los puertos correctos
+    environment:
+      - ???              # Deben identificar qué variables necesita la app
 ```
 
-## 5. Observabilidad
+## 3. GitHub Actions — Pipeline CI/CD
+
+Deben crear `.github/workflows/ci-cd.yml` con los siguientes **stages obligatorios**:
+
+### Stage 1: Build
+- Instalar dependencias del proyecto
+- Verificar que la app compila/arranca
+
+### Stage 2: Test
+- Ejecutar las pruebas unitarias
+- **Mínimo 5 tests** (pueden venir con el código base o escribirlas ellos)
+- Si un test falla, el pipeline se detiene
+
+### Stage 3: Lint
+- Análisis estático de código
+- `flake8` o `ruff` (Python) / `eslint` (Node.js)
+
+### Stage 4: Build de Artefacto (Docker)
+- Construir la imagen Docker con el Dockerfile que crearon
+- Taguear la imagen con el hash del commit o número de versión
+- Esto es el **artefacto** — el producto del build que se va a desplegar
+
+### Stage 5: Release / Publicación
+- Push de la imagen a **Docker Hub** o **GitHub Container Registry**
+- Crear un **GitHub Release** con tag de versión (ej: `v1.0.0`)
+- El artefacto queda publicado y versionado
+
+### Stage 6: Deploy a AWS EC2
+- Conectarse por SSH a la instancia EC2 (usando secrets de GitHub)
+- Hacer `docker pull` de la imagen publicada
+- Levantar el contenedor en EC2
+- Verificar con curl al `/health` que la app respondió
+
+**Flujo visual del pipeline:**
+```
+Push/PR → Build → Test → Lint → Docker Build → Docker Push → Deploy EC2
+           │        │       │         │              │            │
+           └────────┴───────┴─────────┴──────────────┴────────────┘
+                          Si cualquier paso falla, todo se detiene
+```
+
+## 4. Despliegue en AWS
 
 | Requisito | Detalle |
 |-----------|---------|
-| Logs | La aplicación genera logs legibles (pueden usar la librería estándar) |
-| `/health` | Endpoint que retorne estado de la app + BD |
-| Dashboard o métricas | Al menos UNO: CloudWatch, Prometheus + Grafana, o dashboard simple |
+| AWS Academy | Usar la cuenta del laboratorio (gratuita) |
+| EC2 | Levantar una instancia Ubuntu |
+| Security Group | Abrir puerto 22 (SSH) + puerto de la app |
+| GitHub Secrets | Guardar credenciales SSH y Docker Hub como secrets |
+| Deploy automático | El pipeline despliega tras merge a `main` |
+| App accesible | La API debe responder desde la IP pública de la EC2 |
 
-## 6. Seguridad (DevSecOps)
+**Proceso que deben seguir en AWS:**
+1. Crear instancia EC2 (Ubuntu, t2.micro o t3.micro)
+2. Instalar Docker en la EC2 (puede ser manual la primera vez)
+3. Configurar Security Group (puertos)
+4. Probar que funciona: `curl http://<IP-EC2>:<PUERTO>/health`
+
+## 5. Pruebas Unitarias
 
 | Requisito | Detalle |
 |-----------|---------|
-| Sin secretos en código | `.env` para credenciales AWS, tokens, etc. |
+| Mínimo 5 tests | Pueden venir con el código base |
+| Deben pasar en el pipeline | Si fallan, el build se detiene |
+| Estructura AAA | Arrange → Act → Assert (visto en clase) |
+| Tests en carpeta `tests/` | Separados del código fuente |
+
+## 6. Observabilidad
+
+| Requisito | Detalle |
+|-----------|---------|
+| Logs | La app genera logs visibles en el contenedor (`docker logs`) |
+| `/health` | Endpoint que verifique app + BD + APIs externas |
+| Métricas básicas | Al menos UNO: CloudWatch, dashboard simple, o contador de requests |
+
+## 7. Seguridad
+
+| Requisito | Detalle |
+|-----------|---------|
+| Sin secretos en código | `.env` + GitHub Secrets para credenciales |
 | Escaneo de dependencias | `pip audit` o `npm audit` en el pipeline |
-| Sin `sudo` en Dockerfile | Buena práctica de seguridad en contenedores |
+| Dockerfile sin `sudo` | Buena práctica de contenedores |
 
-## 7. Documentación
+## 8. Artefactos y Releases
+
+| Requisito | Detalle |
+|-----------|---------|
+| Imagen Docker versionada | Tag con versión o hash del commit |
+| Publicada en Docker Hub o GHCR | Accesible para hacer pull desde EC2 |
+| GitHub Release | Crear release con tag (ej: `v1.0.0`) al hacer merge a main |
+| `.env.example` | Documentar todas las variables necesarias |
+
+## 9. Documentación
 
 | Archivo | Contenido |
 |---------|-----------|
-| `README.md` | Descripción, cómo clonar, instalar, ejecutar, endpoints, cómo desplegar |
-| `docs/pipeline.md` | Diagrama del CI/CD + explicación de cada stage |
-| `docs/branching.md` | Estrategia elegida + por qué |
+| `README.md` | Descripción, cómo clonar, instalar, ejecutar localmente, endpoints, cómo desplegar en AWS |
+| `docs/pipeline.md` | Diagrama del CI/CD + explicación de cada stage + flujo de artefactos |
+| `docs/branching.md` | Estrategia elegida + por qué + diagrama de flujo de ramas |
+
+## 10. Control de Versiones
+
+| Requisito | Detalle |
+|-----------|---------|
+| Repo privado | Agregar al docente (`cesarpalacios`) como collaborator |
+| Branching | GitHub Flow recomendado: ramas por feature, PR a main |
+| Protección de main | Solo merge vía Pull Request aprobado |
+| Commits semánticos | `feat:`, `fix:`, `docs:`, `ci:`, `test:` |
+| Mínimo 5 PRs | Con review entre integrantes |
 
 ---
 
@@ -213,20 +297,23 @@ Push a main → GitHub Actions:
 
 ```
 mi-proyecto-devops/
-├── src/                        # Código fuente
-├── tests/                      # Pruebas unitarias (mínimo 5)
+├── src/                        # Código fuente (proporcionado)
+├── tests/                      # Pruebas unitarias
 ├── .github/
 │   └── workflows/
-│       └── ci-cd.yml           # Pipeline GitHub Actions
-├── docker-compose.yml
-├── Dockerfile
-├── .env.example
-├── .gitignore
+│       └── ci-cd.yml           # Pipeline (LO CONSTRUYEN ELLOS)
+├── docker-compose.yml          # LO CONSTRUYEN ELLOS
+├── Dockerfile                  # LO CONSTRUYEN ELLOS
+├── .env.example                # LO CONSTRUYEN ELLOS
+├── .gitignore                  # LO CONSTRUYEN ELLOS
 ├── docs/
-│   ├── pipeline.md
-│   └── branching.md
-└── README.md
+│   ├── pipeline.md             # LO CONSTRUYEN ELLOS
+│   └── branching.md            # LO CONSTRUYEN ELLOS
+└── README.md                   # LO CONSTRUYEN ELLOS
 ```
+
+> **Lo que se les da:** Código fuente funcional con tests
+> **Lo que construyen:** Todo el ecosistema DevOps alrededor (Dockerfile, pipeline, deploy, docs)
 
 ---
 
@@ -234,14 +321,15 @@ mi-proyecto-devops/
 
 | Criterio | Peso | Lo que evaluamos |
 |----------|------|-----------------|
-| **Pipeline CI/CD funcional** | 25% | ¿GitHub Actions corre automáticamente? ¿Build + tests + lint pasan? |
-| **Despliegue en AWS** | 20% | ¿La app está accesible en AWS? ¿Se despliega automáticamente tras merge? |
-| **Contenerización (Docker)** | 15% | ¿`docker compose up` funciona? ¿Imagen publicada en Docker Hub? |
+| **Pipeline CI/CD (GitHub Actions)** | 20% | ¿Los 6 stages corren automáticamente? ¿Si falla un test, se detiene? |
+| **Artefactos y Releases** | 15% | ¿La imagen Docker se publica? ¿Hay releases versionados? ¿El flujo de artefactos está documentado? |
+| **Despliegue en AWS EC2** | 20% | ¿La app está accesible? ¿Se despliega automáticamente tras merge? ¿`/health` responde? |
+| **Contenerización (Dockerfile)** | 15% | ¿Crearon el Dockerfile desde cero? ¿`docker compose up` funciona? ¿Resolvieron los errores? |
 | **Pruebas Unitarias** | 10% | ¿Mínimo 5 tests? ¿Pasando en el pipeline? |
-| **Observabilidad** | 10% | ¿Logs visibles? ¿`/health` funciona? ¿Dashboard o métricas? |
+| **Observabilidad** | 5% | ¿Logs visibles? ¿`/health` funciona? |
 | **Seguridad** | 5% | ¿Sin secretos en código? ¿Escaneo de dependencias? |
-| **Documentación y Branching** | 5% | ¿README completo? ¿PRs con review? ¿Docs? |
-| **Presentación y Demo** | 10% | ¿Demo en vivo funciona? ¿Claridad? ¿Manejo del tiempo (15 min)? |
+| **Documentación y Branching** | 5% | ¿README, docs/, PRs con review, commits semánticos? |
+| **Presentación y Demo** | 5% | ¿Demo en vivo funciona? ¿Claridad? ¿15 min? |
 
 **Total: 100%**
 
@@ -251,26 +339,26 @@ mi-proyecto-devops/
 
 | Sección | Tiempo | Qué mostrar |
 |---------|--------|-------------|
-| **La App** | 2 min | ¿Qué hace? ¿Qué endpoints tiene? ¿Qué reto eligieron? |
-| **El Pipeline** | 3 min | Mostrar GitHub Actions. Explicar cada stage del CI/CD |
-| **Demo en vivo** | 5 min | Hacer un cambio → PR → Pipeline corre → App actualizada en AWS |
-| **Observabilidad** | 2 min | Mostrar `/health`, logs, dashboard o métricas |
-| **Preguntas** | 3 min | El docente pregunta sobre el pipeline y las decisiones |
+| **La App** | 2 min | ¿Qué hace? ¿Qué endpoints? ¿Qué reto? |
+| **El Pipeline** | 4 min | Mostrar GitHub Actions corriendo. Explicar cada stage y el flujo de artefactos |
+| **Demo en vivo** | 5 min | Hacer un cambio → Abrir PR → Pipeline corre → Imagen se publica → App se actualiza en AWS |
+| **Artefactos** | 2 min | Mostrar Docker Hub con la imagen. Mostrar GitHub Releases |
+| **Preguntas** | 2 min | El docente pregunta sobre el pipeline, el Dockerfile y las decisiones |
 
 ---
 
-# Stack Tecnológico Sugerido
+# Stack Tecnológico
 
 | Componente | Python | Node.js |
 |------------|--------|---------|
 | Framework | FastAPI o Flask | Express |
-| Base de datos | SQLite (viene con Python) | SQLite |
+| Base de datos | SQLite (incluido) | SQLite |
 | Tests | pytest | Jest |
 | Linter | flake8 / ruff | eslint |
 | CI/CD | GitHub Actions | GitHub Actions |
-| Contenedores | Docker + Compose | Docker + Compose |
-| Deploy AWS | EC2 + Docker o App Runner | EC2 + Docker o App Runner |
-| Observabilidad | CloudWatch o Prometheus | CloudWatch o Prometheus |
+| Contenedores | Docker | Docker |
+| Artifact registry | Docker Hub | Docker Hub |
+| Deploy | AWS EC2 + Docker | AWS EC2 + Docker |
 
 ---
 
@@ -286,22 +374,37 @@ mi-proyecto-devops/
 
 # Checklist de Entrega
 
+**Pipeline:**
+- [ ] `.github/workflows/ci-cd.yml` con 6 stages
+- [ ] Build automático
+- [ ] Mínimo 5 tests pasando
+- [ ] Lint pasando
+- [ ] Artefacto Docker construido y publicado
+- [ ] Release en GitHub con tag de versión
+
+**Docker:**
+- [ ] `Dockerfile` creado desde cero (no copiado de internet)
+- [ ] `docker-compose.yml` funciona con `docker compose up`
+- [ ] `.env.example` con todas las variables
+
+**AWS:**
+- [ ] EC2 creada con Docker instalado
+- [ ] App accesible desde la IP pública
+- [ ] `/health` responde correctamente
+- [ ] Deploy automático desde GitHub Actions
+
+**Repositorio:**
 - [ ] Repo privado con docente como collaborator
-- [ ] `.github/workflows/ci-cd.yml` funcionando
-- [ ] Mínimo 5 tests pasando en el pipeline
-- [ ] `Dockerfile` + `docker-compose.yml`
-- [ ] Imagen publicada en Docker Hub
-- [ ] Despliegue automático en AWS
-- [ ] App accesible desde internet (IP pública de EC2 o URL de App Runner)
-- [ ] `GET /health` funcional
-- [ ] Logs visibles
-- [ ] Escaneo de seguridad en el pipeline
+- [ ] Protección de rama main
+- [ ] Mínimo 5 PRs con review
+- [ ] Commits semánticos
+- [ ] `.gitignore` correcto
 - [ ] Sin secretos en el código
-- [ ] Mínimo 5 Pull Requests con review
-- [ ] `README.md` completo con instrucciones
-- [ ] `docs/pipeline.md` y `docs/branching.md`
-- [ ] `.env.example` con variables necesarias
-- [ ] Demo preparada (15 minutos)
+
+**Documentación:**
+- [ ] `README.md` completo
+- [ ] `docs/pipeline.md` con diagrama del flujo de artefactos
+- [ ] `docs/branching.md` con estrategia documentada
 
 ---
 
