@@ -30,117 +30,21 @@ Cada grupo debe construir un **pipeline DevOps completo** desde cero sobre una A
 
 # 3. Retos disponibles
 
-Cada grupo elige **UN reto**. Se entrega el enunciado de la API — construir el ecosistema DevOps es el trabajo.
+Los retos estan documentados en la carpeta **[retos/](retos/README.md)** — cada caso tiene su propio README con el problema, los endpoints que debe exponer la API y las reglas de negocio.
 
-## Reto 1: API de Tareas (To-Do)
+| Reto | Caso | Stack |
+|------|------|-------|
+| 1 | [API de Tareas](retos/reto-1-tareas/README.md) | FastAPI + SQLite |
+| 2 | [API de Clima](retos/reto-2-clima/README.md) | Flask + Open-Meteo |
+| 3 | [Generador de Contrasenas](retos/reto-3-passwords/README.md) | Node/Express |
+| 4 | [API de Libros](retos/reto-4-libros/README.md) | FastAPI + SQLite |
+| 5 | [API de Cotizacion de Monedas](retos/reto-5-monedas/README.md) | Node + SQLite |
+| 6 | [Mini Blog](retos/reto-6-miniblog/README.md) | Flask + SQLite |
+| 7 | [API de Encuestas](retos/reto-7-encuestas/README.md) 🆕 | FastAPI + SQLite |
+| 8 | [API de Reservas de Salas](retos/reto-8-reservas/README.md) 🆕 | Node + SQLite |
+| 9 | [Reto Libre](retos/reto-9-libre/README.md) | Libre |
 
-```
-GET     /tasks      → Listar tareas
-POST    /tasks      → Crear tarea {titulo, descripcion}
-PUT     /tasks/:id  → Actualizar tarea
-DELETE  /tasks/:id  → Eliminar tarea
-GET     /health     → Estado del servicio + BD
-GET     /metrics    → Métricas en formato Prometheus
-```
-
-**Stack:** Python + FastAPI + SQLite
-
-## Reto 2: API de Clima
-
-```
-GET     /weather/:city          → Clima actual (temperatura, humedad, viento)
-GET     /weather/:city/forecast → Pronóstico 5 días
-GET     /history                → Últimas 10 consultas
-GET     /health                 → Estado del servicio + API externa
-GET     /metrics                → Métricas en formato Prometheus
-```
-
-**API externa:** Open-Meteo (gratuita, sin API key) | **Stack:** Python + Flask + SQLite
-
-## Reto 3: Generador de Contraseñas
-
-```
-GET     /generate?length=16&numbers=true&symbols=true → Generar contraseña
-POST    /batch    → Generar múltiples {cantidad, longitud}
-GET     /stats    → Estadísticas de uso
-GET     /health   → Estado del servicio
-GET     /metrics  → Métricas en formato Prometheus
-```
-
-**Stack:** Node.js + Express
-
-## Reto 4: API de Libros
-
-```
-GET     /books           → Listar libros (paginado)
-GET     /books/:id       → Detalle de un libro
-GET     /books/search?q= → Buscar por título o autor
-POST    /books           → Agregar libro {titulo, autor, año}
-DELETE  /books/:id       → Eliminar libro
-GET     /health          → Estado del servicio + BD
-GET     /metrics         → Métricas en formato Prometheus
-```
-
-**Stack:** Python + FastAPI + SQLite
-
-## Reto 5: API de Cotización de Monedas
-
-```
-GET     /rate/:from/:to  → Cotización (ej: /rate/USD/COP)
-GET     /rates/:base     → Todas las tasas para una moneda
-GET     /history         → Últimas 20 consultas
-GET     /health          → Estado del servicio + API externa
-GET     /metrics         → Métricas en formato Prometheus
-```
-
-**API externa:** https://open.er-api.com (gratuita) | **Stack:** Node.js + Express + SQLite
-
-## Reto 6: Mini Blog
-
-```
-GET     /posts      → Listar posts
-GET     /posts/:id  → Ver un post
-POST    /posts      → Crear post {titulo, contenido, autor}
-PUT     /posts/:id  → Editar post
-DELETE  /posts/:id  → Eliminar post
-GET     /health     → Estado del servicio + BD
-GET     /metrics    → Métricas en formato Prometheus
-```
-
-**Stack:** Python + Flask + SQLite
-
-## Reto 7: API de Encuestas 🆕
-
-```
-POST    /surveys             → Crear encuesta {pregunta, opciones[]}
-GET     /surveys             → Listar encuestas activas
-POST    /surveys/:id/vote    → Votar {opcion}
-GET     /surveys/:id/results → Resultados con conteo y porcentaje
-GET     /health              → Estado del servicio + BD
-GET     /metrics             → Métricas en formato Prometheus
-```
-
-**Stack:** Python + FastAPI + SQLite
-
-## Reto 8: API de Reservas de Salas 🆕
-
-```
-GET     /rooms               → Listar salas disponibles
-POST    /reservations        → Reservar {sala, fecha, hora_inicio, hora_fin, responsable}
-GET     /reservations?date=  → Reservas de un día
-DELETE  /reservations/:id    → Cancelar reserva
-GET     /health              → Estado del servicio + BD
-GET     /metrics             → Métricas en formato Prometheus
-```
-
-**Regla de negocio:** no se permiten reservas que se crucen en la misma sala. **Stack:** Node.js + Express + SQLite
-
-## Reto 9: Reto Libre
-
-Propongan su propia idea. Mínimo 3 endpoints + `/health` + `/metrics`.
-**Requiere aprobación del docente** (pídela por correo antes del registro).
-
----
+Cada grupo elige **UN caso** y lo indica en el formulario de registro.
 
 # 4. Paralelismo: Temas del Curso → Trabajo Final
 
