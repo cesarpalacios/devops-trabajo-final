@@ -14,21 +14,13 @@ Cada grupo debe construir un **pipeline DevOps completo** desde cero sobre una A
 
 ---
 
-# 1. Formación de grupos
-
-- Grupos de **2 a 3 personas** (individual solo con aprobación del docente).
-- **Registro:** diligencia el formulario una sola vez por grupo con los integrantes y el **usuario de GitHub** de al menos un integrante:
-  👉 **https://docs.google.com/forms/d/e/1FAIpQLSdAL4SWplE1eziIfx1FBG60kmCdbRlQKgA6uzB9Uvc4QR8lDQ/viewform**
-- **Fecha límite de registro:** viernes 28 de noviembre de 2026. Nadie queda solo: quien no logre armarse en un grupo, el docente lo asigna a un grupo incompleto.
-- **Asignación de retos:** el docente asigna **UN reto distinto** a cada grupo (sección 3) y comparte el acceso a este repositorio del enunciado con los usuarios de GitHub registrados. Cada grupo recibe por correo su reto asignado y las instrucciones de trabajo.
-
-# 2. Repositorio del grupo
+# 1. Repositorio del grupo
 
 - Crear un repo **privado** llamado `devops-tf-<nombre-corto>` (ej: `devops-tf-clima`).
 - Agregar al docente (`cesarpalacios`) como **collaborator** (Settings → Collaborators).
 - El código base del reto lo construyen ustedes desde el enunciado; lo que NO se entrega es el ecosistema DevOps.
 
-# 3. Retos disponibles
+# 2. Retos disponibles
 
 Los retos estan documentados en la carpeta **[retos/](retos/README.md)** — cada caso tiene su propio README con el problema, los endpoints que debe exponer la API y las reglas de negocio.
 
@@ -44,9 +36,9 @@ Los retos estan documentados en la carpeta **[retos/](retos/README.md)** — cad
 | 8 | [API de Reservas de Salas](retos/reto-8-reservas/README.md) 🆕 | Node + SQLite |
 | 9 | [Reto Libre](retos/reto-9-libre/README.md) | Libre |
 
-Cada grupo elige **UN caso** y lo indica en el formulario de registro.
+Cada grupo recibe **UN caso**, asignado por el docente.
 
-# 4. Paralelismo: Temas del Curso → Trabajo Final
+# 3. Paralelismo: Temas del Curso → Trabajo Final
 
 | # | Tema visto en clase | Dónde se aplica en el proyecto |
 |---|---------------------|-------------------------------|
@@ -65,9 +57,9 @@ Cada grupo elige **UN caso** y lo indica en el formulario de registro.
 
 ---
 
-# 5. Requisitos del Pipeline
+# 4. Requisitos del Pipeline
 
-## 5.1 Repositorio y Control de Versiones
+## 4.1 Repositorio y Control de Versiones
 
 | Requisito | Detalle |
 |-----------|---------|
@@ -78,7 +70,7 @@ Cada grupo elige **UN caso** y lo indica en el formulario de registro.
 | `.gitignore` | `node_modules/`, `__pycache__/`, `.env`, `*.log`, `.venv/` |
 | Mínimo 5 Pull Requests | Con review y aprobación entre integrantes |
 
-## 5.2 Contenerización — Dockerfile desde cero
+## 4.2 Contenerización — Dockerfile desde cero
 
 **NO se proporciona Dockerfile.** Lo construyen desde cero. Deben resolver:
 - Imagen base correcta (`python:3.12-slim`, `node:20-alpine`)
@@ -87,7 +79,7 @@ Cada grupo elige **UN caso** y lo indica en el formulario de registro.
 - Comando de inicio con `CMD`
 - `docker-compose.yml` que levante todo con un comando
 
-## 5.3 Pruebas Unitarias
+## 4.3 Pruebas Unitarias
 
 | Requisito | Detalle |
 |-----------|---------|
@@ -96,7 +88,7 @@ Cada grupo elige **UN caso** y lo indica en el formulario de registro.
 | Integrados al pipeline | Si un test falla, el build se detiene |
 | Framework | `pytest` (Python) o `jest` (Node.js) |
 
-## 5.4 GitHub Actions — Pipeline CI/CD (6 stages obligatorios)
+## 4.4 GitHub Actions — Pipeline CI/CD (6 stages obligatorios)
 
 ```
 Push/PR a main → 1.Build → 2.Test → 3.Lint → 4.Artifact → 5.Release → 6.Deploy (AWS EC2 + /health)
@@ -104,33 +96,22 @@ Push/PR a main → 1.Build → 2.Test → 3.Lint → 4.Artifact → 5.Release �
 
 Si CUALQUIER stage falla → todo se detiene.
 
-## 5.5 Despliegue
+## 4.5 Despliegue
 
 - EC2 encendida solo durante la demo y las verificaciones (costo).
 - `/health` accesible públicamente al momento de la entrega.
 
 ---
 
-# 6. Cronograma
-
-| Hito | Fecha | Qué se verifica |
-|------|-------|-----------------|
-| Registro de grupos | **viernes 21 nov** | Form diligenciado + reto asignado |
-| Hito 1 — Repo + Docker | **martes 25 nov** | Repo privado con collaborator, branching activo, app corre en Docker local |
-| Hito 2 — Pipeline hasta Release | **martes 2 dic** | CI con Build/Test/Lint verde, imagen publicada en Docker Hub/GHCR, GitHub Release v0.1.0 |
-| Entrega final + demos | **martes 9 dic** | Pipeline completo + despliegue EC2 + demo en vivo 15 min |
-
----
-
-# 7. Entrega final
+# 5. Entrega final
 
 El entregable del trabajo final son **dos componentes obligatorios**: el **documento escrito** de documentación del proceso y el **repositorio** con el pipeline funcionando.
 
-## 7.1 Documento escrito de documentación del proceso (PDF)
+## 5.1 Documento escrito de documentación del proceso (PDF)
 
 Informe de **10 a 15 páginas** que documente TODO el proceso seguido por el grupo. Estructura mínima:
 
-1. **Portada** — curso, reto asignado, integrantes y correo.
+ — curso, reto asignado, integrantes y correo.
 2. **Introducción y objetivos** — qué construyeron y por qué.
 3. **Arquitectura de la solución** — componentes, diagrama y decisiones de diseño.
 4. **Gestión del repositorio** — estrategia de branching, commits semánticos, PRs y reviews.
@@ -146,14 +127,14 @@ Informe de **10 a 15 páginas** que documente TODO el proceso seguido por el gru
 
 > El documento se entrega en PDF por el canal que indique el docente antes de la fecha de entrega final.
 
-## 7.2 Repositorio
+## 5.2 Repositorio
 
 1. Repo privado con todo el pipeline y `docs/` completo.
 2. Tag `v1.0.0` + **GitHub Release** con notas de la versión.
 3. URL pública de `/health` en EC2 funcionando al momento de la demo.
 4. **Demo en vivo (15 min por grupo):** pipeline corriendo en un push real, dashboard Grafana con tráfico, respuesta del docente sobre decisiones tomadas.
 
-# 8. Calificación
+# 6. Calificación
 
 | Componente | Peso |
 |-----------|------|
@@ -166,6 +147,6 @@ Informe de **10 a 15 páginas** que documente TODO el proceso seguido por el gru
 
 **Reglas de honestidad:** el trabajo se defiende en la demo — cualquier integrante debe poder explicar cualquier parte del pipeline. Copia entre grupos = nota mínima para ambos.
 
-# 9. Dudas
+# 7. Dudas
 
 Correo del curso o pregunta en clase. ¡Éxitos!
