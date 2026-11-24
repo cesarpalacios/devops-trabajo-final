@@ -17,10 +17,10 @@ Cada grupo debe construir un **pipeline DevOps completo** desde cero sobre una A
 # 1. Formación de grupos
 
 - Grupos de **2 a 3 personas** (individual solo con aprobación del docente).
-- **Registro:** diligencia el formulario una sola vez por grupo:
+- **Registro:** diligencia el formulario una sola vez por grupo con los integrantes y el **usuario de GitHub** de al menos un integrante:
   👉 **https://docs.google.com/forms/d/e/1FAIpQLSdAL4SWplE1eziIfx1FBG60kmCdbRlQKgA6uzB9Uvc4QR8lDQ/viewform**
-- **Fecha límite de registro:** viernes 21 de noviembre de 2026.
-- Cada grupo elige **UN reto** de la lista (sección 3). Los retos se asignan por orden de registro: si dos grupos eligen el mismo, lo repite el que registró después.
+- **Fecha límite de registro:** viernes 28 de noviembre de 2026. Nadie queda solo: quien no logre armarse en un grupo, el docente lo asigna a un grupo incompleto.
+- **Asignación de retos:** el docente asigna **UN reto distinto** a cada grupo (sección 3) y comparte el acceso a este repositorio del enunciado con los usuarios de GitHub registrados. Cada grupo recibe por correo su reto asignado y las instrucciones de trabajo.
 
 # 2. Repositorio del grupo
 
