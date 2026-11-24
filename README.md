@@ -124,6 +124,30 @@ Si CUALQUIER stage falla → todo se detiene.
 
 # 7. Entrega final
 
+El entregable del trabajo final son **dos componentes obligatorios**: el **documento escrito** de documentación del proceso y el **repositorio** con el pipeline funcionando.
+
+## 7.1 Documento escrito de documentación del proceso (PDF)
+
+Informe de **10 a 15 páginas** que documente TODO el proceso seguido por el grupo. Estructura mínima:
+
+1. **Portada** — curso, reto asignado, integrantes y correo.
+2. **Introducción y objetivos** — qué construyeron y por qué.
+3. **Arquitectura de la solución** — componentes, diagrama y decisiones de diseño.
+4. **Gestión del repositorio** — estrategia de branching, commits semánticos, PRs y reviews.
+5. **Pipeline CI/CD** — los 6 stages: qué hace cada uno, con evidencia de ejecución.
+6. **Pruebas** — qué cubren los tests, resultados.
+7. **Contenerización** — decisiones del Dockerfile y docker-compose.
+8. **Despliegue en AWS EC2** — procedimiento y evidencia del `/health`.
+9. **Observabilidad** — capturas del dashboard Grafana y análisis de métricas.
+10. **Seguridad DevSecOps** — escaneos realizados y manejo de secrets.
+11. **Dificultades y soluciones** — problemas reales del equipo y cómo los resolvieron.
+12. **Conclusiones y aprendizajes** — qué se llevaron del curso.
+13. **Anexos** — capturas adicionales.
+
+> El documento se entrega en PDF por el canal que indique el docente antes de la fecha de entrega final.
+
+## 7.2 Repositorio
+
 1. Repo privado con todo el pipeline y `docs/` completo.
 2. Tag `v1.0.0` + **GitHub Release** con notas de la versión.
 3. URL pública de `/health` en EC2 funcionando al momento de la demo.
@@ -133,12 +157,12 @@ Si CUALQUIER stage falla → todo se detiene.
 
 | Componente | Peso |
 |-----------|------|
-| Pipeline CI/CD completo y funcional (6 stages) | 30% |
+| Pipeline CI/CD completo y funcional (6 stages) | 25% |
 | Docker + Kubernetes en EC2 | 20% |
 | Pruebas unitarias + calidad de código (lint, commits, PRs) | 15% |
 | Observabilidad (Prometheus + Grafana + logs) | 15% |
 | DevSecOps (escaneos, manejo de secrets) | 10% |
-| Documentación (`docs/`, README, cultura.md) + demo | 10% |
+| Documento escrito de documentación del proceso + `docs/`, README, cultura.md | 15% |
 
 **Reglas de honestidad:** el trabajo se defiende en la demo — cualquier integrante debe poder explicar cualquier parte del pipeline. Copia entre grupos = nota mínima para ambos.
 
