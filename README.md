@@ -35,6 +35,8 @@ Los retos estan documentados en la carpeta **[retos/](retos/README.md)** — cad
 | 7 | [API de Encuestas](retos/reto-7-encuestas/README.md) 🆕 | FastAPI + SQLite |
 | 8 | [API de Reservas de Salas](retos/reto-8-reservas/README.md) 🆕 | Node + SQLite |
 | 9 | [Reto Libre](retos/reto-9-libre/README.md) | Libre |
+| 10 | [API de Citas Medicas](retos/reto-10-citas/README.md) | FastAPI + SQLite |
+| 11 | [API de Gestion de Inventarios](retos/reto-11-inventarios/README.md) | Node + SQLite |
 
 Cada grupo recibe **UN caso**, asignado por el docente.
 
