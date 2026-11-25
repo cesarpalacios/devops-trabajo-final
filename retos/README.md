@@ -11,6 +11,8 @@ Cada grupo elige **UN reto**. El detalle completo de cada caso esta en su carpet
 - [Reto 7: API de Encuestas](retos/reto-7-encuestas/README.md) 🆕
 - [Reto 8: API de Reservas de Salas](retos/reto-8-reservas/README.md) 🆕
 - [Reto 9: Reto Libre](retos/reto-9-libre/README.md) (requiere aprobacion previa)
+- [Reto 10: API de Citas Medicas](retos/reto-10-citas/README.md) 🆕
+- [Reto 11: API de Gestion de Inventarios](retos/reto-11-inventarios/README.md) 🆕
 
 Reglas comunes a todos los retos: endpoints /health y /metrics obligatorios,
 persistencia real (SQLite), y el ecosistema DevOps del README principal.
